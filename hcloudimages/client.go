@@ -104,9 +104,10 @@ const (
 	CompressionNone Compression = ""
 	CompressionBZ2  Compression = "bz2"
 	CompressionXZ   Compression = "xz"
+	CompressionZST  Compression = "zst"
 
 	// Possible future additions:
-	// zip,zstd
+	// zip
 )
 
 type Format string
@@ -524,6 +525,8 @@ func assembleCommand(options UploadOptions) (string, error) {
 			cmd += "bzip2 -cd | "
 		case CompressionXZ:
 			cmd += "xz -cd | "
+		case CompressionZST:
+			cmd += "zstd -cd | "
 		default:
 			return "", fmt.Errorf("unknown compression: %q", options.ImageCompression)
 		}
